@@ -17,16 +17,34 @@ sigma = 0
 U_matrix = numpy.random.random_integers(1, 6, (2, 2))
 
 V_matrix = numpy.random.random_integers(1, 6, (2, 2))
+print "Umat"
+print U_matrix
+print "Vmat"
+print V_matrix
+print "V_matrix[:, 1].T"
+print V_matrix[:, 1].T
+print "V_matrix[:, 1]"
+print V_matrix[:, 1]
+print "sigma_rat*numpy.eye(2)"
+print sigma_rat*numpy.eye(2)
+print "V_matrix[1, :].T"
+print V_matrix[1, :].T
+print "R_matrix[1, :]"
+print R_matrix[1, :]
+"""
+for u in range (iterations):
+    # U_matrix = numpy.linalg.solve(numpy.dot(V_matrix,V_matrix.T)+ sigma_rat*numpy.eye(2), numpy.dot(V_matrix, R_matrix.T)).T
+    U_matrix[u,:] = numpy.linalg.solve(numpy.dot(V_matrix[:, u].T, V_matrix[:, u])+sigma_rat*numpy.eye(2), numpy.dot(V_matrix[u, :].T, R_matrix[u, :]))
+    #IS Ruv A SCALAR??
 
-for i in range (iterations):
-    U_matrix = numpy.linalg.solve(numpy.dot(V_matrix,V_matrix.T)+ sigma_rat*numpy.eye(2), numpy.dot(V_matrix, R_matrix.T)).T
+for v in range(n): #for each row
+    #V_matrix = numpy.linalg.solve(numpy.dot(U_matrix.T,U_matrix)+ sigma_rat*numpy.eye(2), numpy.dot(U_matrix.T, R_matrix))
+    V_matrix[:,v] = numpy.linalg.solve(numpy.dot(U_matrix.T, U_matrix) + sigma_rat*numpy.eye(2), numpy.dot(U_matrix.T, R_matrix[:, v].T)).T
 
-    V_matrix = numpy.linalg.solve(numpy.dot(U_matrix.T,U_matrix)+ sigma_rat*numpy.eye(2), numpy.dot(U_matrix.T, R_matrix))
+R_tilde = numpy.dot(U_matrix.T, V_matrix)
 
-    R_tilde = numpy.dot(U_matrix, V_matrix)
 
-    print i
-    print R_tilde
+print R_tilde"""
 
 """
 for i in range (iterations):
