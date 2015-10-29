@@ -1,8 +1,16 @@
 import random
 import numpy
 #correct matrix we want to get back to
-R_matrix = numpy.matrix('1,2,;3,5')
+U_matrix = 5*numpy.random.rand(2,2)
 
+V_matrix = 5*numpy.random.rand(2,2)
+
+#R_matrix = numpy.matrix('1,2,;3,5')
+R_matrix = numpy.dot(U_matrix.T, V_matrix)
+print "1st U: ", U_matrix
+print "1st V: ", V_matrix
+
+print "original R: ", R_matrix
 
 R_tilde = numpy.matrix('0,0 ; 0,0')
 iterations = 5
@@ -17,29 +25,9 @@ sigma = 0
 U_matrix = 5*numpy.random.rand(2,2)
 
 V_matrix = 5*numpy.random.rand(2,2)
-"""
-print "Umat"
-print U_matrix
-print "Vmat"
-print V_matrix
-print "V_matrix[:, 1].T"
-print V_matrix[:, 1].T
-print "V_matrix[:, 1]"
-print V_matrix[:, 1]
-print "sigma_rat*numpy.eye(2)"
-print sigma_rat*numpy.eye(2)
-print "V_matrix[1, :].T"
-print V_matrix[1, :].T
-print "R_matrix[1, :]"
-print R_matrix[1, :]
+print "2nd U: ", U_matrix
+print "2nd V: ", V_matrix
 
-R_row = numpy.matrix('1,2,3')
-V_mat = numpy.matrix('1,2; 5,6;7,8')
-print R_row
-print V_mat
-print "dot"
-print numpy.dot(R_row, V_mat) # = R*V elementwise
-"""
 
 for i in range(iterations):
 
@@ -57,7 +45,7 @@ for i in range(iterations):
 
     R_tilde = numpy.dot(U_matrix.T, V_matrix)
 
-    print R_tilde
+print R_tilde
 
 """
 for i in range (iterations):
