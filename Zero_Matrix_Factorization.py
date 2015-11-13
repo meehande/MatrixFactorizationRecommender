@@ -1,4 +1,3 @@
-import random
 import numpy
 
 iterations = 5
@@ -8,7 +7,7 @@ n = 150
 m = 300
 d = 20
 sigma = 0
-fraction_non_zero = 0.3
+fraction_non_zero = 0.7
 
 # correct matrix we want to get back to setup
 U_matrix = numpy.random.rand(d, n)
@@ -71,35 +70,3 @@ def compare_matrices(a, b, tolerance):
 
 print compare_matrices(R_matrix, R_tilde, 0.1)
 
-
-
-"""
-for i in range (iterations):
-    U_matrix = numpy.linalg.solve(numpy.dot(R_matrix, V_matrix.T),numpy.linalg.inv(numpy.dot(V_matrix, V_matrix.T) + sigma_rat*numpy.eye(rank)))
-    print "U matrix"
-    print U_matrix
-
-    V_matrix =  numpy.linalg.solve(numpy.dot(R_matrix, U_matrix.T),numpy.linalg.inv(numpy.dot(U_matrix, U_matrix.T) + sigma_rat*numpy.eye(rank)))
-    print "V matrix"
-    print V_matrix
-
-    R_tilde = numpy.dot(U_matrix, V_matrix.T)
-
-    print "R tilde"
-    print R_tilde
-"""
-
-""" copying matlab..."""
-"""
-UUU = numpy.eye(rank) / sigma
-VVV = numpy.eye(rank) / sigma
-n = 2 #num users - matrix dimension
-for i in range (iterations):
-    for g in range(n):
-        U_matrix[:, g] = numpy.dot(R_matrix[g, :],  V_matrix[:, g].T)/numpy.dot((VVV + V_matrix), V_matrix.T)
-#Unetflix(:,g) =  R(g,existingvalues(g,:)) * Vnetflix(:,(existingvalues(g,:)))' / (VVVnetflix+Vnetflix(:,(existingvalues(g,:))) * Vnetflix(:,(existingvalues(g,:)))');
-
-    for v in range(n):
-        V_matrix[:, v] = numpy.dot(R_matrix[:, v].T,  U_matrix[:, g].T)/numpy.dot((UUU + U_matrix), U_matrix.T)
-#Vnetflix(:,v) = R(existingvalues(:,v),v)' * Unetflix(:,existingvalues(:,v))' / (UUUnetflix + Unetflix(:,existingvalues(:,v)) * Unetflix(:,existingvalues(:,v))');
-"""

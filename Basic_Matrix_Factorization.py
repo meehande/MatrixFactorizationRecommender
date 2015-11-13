@@ -1,12 +1,11 @@
-import random
 import numpy
 
 iterations = 5
 sigma_rat = 0
 rank = 2
-n = 45
-m = 57
-d = 7
+n = 150
+m = 300
+d = 20
 sigma = 0
 
 # correct matrix we want to get back to setup
