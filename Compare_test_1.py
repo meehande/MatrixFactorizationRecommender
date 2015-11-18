@@ -7,6 +7,7 @@ Created on Fri Nov 13 14:03:22 2015
 
 import numpy
 import time
+from rmse import rmse
 # creating R with zeroes and using the basic method and the zero_matrix method 
 # to see how long each takes with the same input for comparison
 
@@ -87,7 +88,8 @@ print basic_time
 print "Zero: ", compare_matrices(R_matrix, zero_R, 0.1)
 print zero_time
 
-
+err = rmse(R_matrix, zero_R)
+print err
 
 
 
