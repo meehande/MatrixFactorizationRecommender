@@ -35,7 +35,7 @@ f.close
 
 #data = {'n':[{}],"m":[{}], "d":[{}]}
 
-while (n < 1000):
+while (n < 600):
     
     R = blc.createR(n,m,d)
     W = blc.sampleR(R)   
@@ -44,10 +44,10 @@ while (n < 1000):
     if(data['n'].has_key(str(n))):
         data['n'][str(n)].append(timeit.default_timer()-start_time)
     else:
-        data['n'].update({str(n):[str(timeit.default_timer()-start_time)]})
+        data['n'].update({str(n):[timeit.default_timer()-start_time]})
     #f.write(str(timeit.default_timer()-start_time)+ "\n")    
   #  print data
-    n = n + 100
+    n = n + 10
 #print data    
 f = open(filename, 'w+')
 f.write(json.dumps(data))
