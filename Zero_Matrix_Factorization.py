@@ -1,14 +1,20 @@
 import numpy
+<<<<<<< HEAD
 import cProfile
+=======
+import timeit 
+>>>>>>> 3db25c535f07af3fc549e118689b68ad6a31d0d1
 
 iterations = 5
 sigma_rat = 0
 rank = 2
-n = 150
-m = 300
-d = 20
-sigma = 0
+n = 1000
+m = 100
+d = 10
+sigma = 0.0001
 fraction_non_zero = 0.7
+Id = np.identity(d)
+
 
 # correct matrix we want to get back to setup
 U_matrix = numpy.random.rand(d, n)
@@ -36,10 +42,11 @@ V_matrix = 5*numpy.random.rand(d, m)
 #print "2nd V: \n", V_matrix
 
 un,um = U_matrix.shape
+t0= timeit.default_timer()
 for i in range(iterations):
     for u in range (n): # u = row
         #try:
-        U_matrix[:, u] = numpy.dot(numpy.dot(R_matrix[u,R_matrix[u,:]!=0], V_matrix[:,R_matrix[u,:]!=0].T), numpy.linalg.pinv(numpy.asmatrix(numpy.dot(V_matrix[:,R_matrix[u,:]!=0], V_matrix[:,R_matrix[u,:]!=0].T))))
+        U_matrix[:, u] = numpy.dot(numpy.dot(R_matrix[u,R_matrix[u,:]!=0], V_matrix[:,R_matrix[u,:]!=0].T), numpy.linalg.pinv(numpy.asmatrix(Id*sigma + numpy.dot(V_matrix[:,R_matrix[u,:]!=0], V_matrix[:,R_matrix[u,:]!=0].T))))
         #except IndexError:
           #  pass
         # U_matrix = numpy.linalg.solve(numpy.dot(V_matrix,V_matrix.T)+ sigma_rat*numpy.eye(2), numpy.dot(V_matrix, R_matrix.T)).T
@@ -49,12 +56,13 @@ for i in range(iterations):
     for v in range(m): #for each row
         # V_matrix = numpy.linalg.solve(numpy.dot(U_matrix.T,U_matrix)+ sigma_rat*numpy.eye(2), numpy.dot(U_matrix.T, R_matrix))
         # V_matrix[:,v] = numpy.linalg.solve(numpy.dot(U_matrix.T, U_matrix) + sigma_rat*numpy.eye(2), numpy.dot(U_matrix.T, R_matrix[:, v].T)).T
-        V_matrix[:, v] = numpy.dot(numpy.dot(R_matrix[R_matrix[:,v]!=0, v].T, U_matrix[:, R_matrix[0:um,v]!=0].T), numpy.linalg.pinv(numpy.asmatrix(numpy.dot(U_matrix[:, R_matrix[0:um,v]!=0], U_matrix[:, R_matrix[0:um,v]!=0].T))))
+        V_matrix[:, v] = numpy.dot(numpy.dot(R_matrix[R_matrix[:,v]!=0, v].T, U_matrix[:, R_matrix[0:um,v]!=0].T), numpy.linalg.pinv(Id*sigma + numpy.asmatrix(numpy.dot(U_matrix[:, R_matrix[0:um,v]!=0], U_matrix[:, R_matrix[0:um,v]!=0].T))))
 
     R_tilde = numpy.dot(U_matrix.T, V_matrix)
 
 #print "ANSWER:\n", R_tilde
-
+t1 = timeit.default_timer() 
+print t1-t0
 
 def compare_matrices(a, b, tolerance):
     if a.shape != b.shape:

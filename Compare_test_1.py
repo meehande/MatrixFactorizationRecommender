@@ -15,10 +15,10 @@ import pstats, StringIO
 
 
 iterations = 5
-n = 150
-m = 300
+n = 500
+m = 1000
 d = 20
-fraction_non_zero = 0.7
+fraction_non_zero = 0.9
 
 # correct matrix we want to get back to setup
 U_matrix = numpy.random.rand(d, n)
@@ -48,7 +48,11 @@ pr = cProfile.Profile()
 pr.enable()
 # BASIC MATRIX FACTORIZATION
 t0 = time.time()
-for i in range(iterations):
+#for i in range(iterations):
+tolerance = 0.1
+err = tolerance + 1
+i = 0
+while (err > tolerance or i < 100):
     for u in range (n): # u = row
         basic_u[:, u] = numpy.dot(numpy.dot(R_matrix[u, :], basic_v.T), numpy.linalg.pinv(numpy.asmatrix(numpy.dot(basic_v, basic_v.T))))
 
@@ -56,6 +60,7 @@ for i in range(iterations):
         basic_v[:, v] = numpy.dot(numpy.dot(R_matrix[:, v].T, basic_u.T), numpy.linalg.pinv(numpy.asmatrix(numpy.dot(basic_u, basic_u.T))))
 
     basic_R = numpy.dot(basic_u.T, basic_v)
+<<<<<<< HEAD
 pr.disable()
 s = StringIO.StringIO()
 sortby = "cumulative"
@@ -63,6 +68,10 @@ ps = pstats.Stats(pr, stream = s).sort_stats(sortby)
 ps.print_stats()
 ps.dump_stats("output_stats.txt")
 #print s.getvalue()
+=======
+    err = rmse(R_matrix, basic_R)
+    i += 1
+>>>>>>> 3db25c535f07af3fc549e118689b68ad6a31d0d1
 t1 = time.time()
 basic_time = t1 - t0
 # ZERO MATRIX FACTORIZATION
