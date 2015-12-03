@@ -7,12 +7,29 @@ m:time
 so that most current results are always recorded. 
 
 """
+#JSON format - to implement:
+#    {n: 
+#	{(m,d):
+#		{n1:	[t], n2: [t],   },
+#	 (m2,d2):
+#		{n1:	[t], n2: [t],   }
+#	}
+#	
+#}
+#	{3:[]},
+#d: {}
+#
+#}
+#n: dict{tuple(md) : dict{n:[t]}}
+
+
+
 
 import blc
 import timeit
 import json
 
-n = 500
+n = 400
 m = 100
 d = 10
 
@@ -35,22 +52,26 @@ f.close
 
 #data = {'n':[{}],"m":[{}], "d":[{}]}
 
-while (n < 600):
+while (m < 500):
     
     R = blc.createR(n,m,d)
     W = blc.sampleR(R)   
     start_time = timeit.default_timer()
     (U,V) = blc.ls(R,W,d)
-    if(data['n'].has_key(str(n))):
-        data['n'][str(n)].append(timeit.default_timer()-start_time)
+    if(data['m'].has_key(str(m))):
+        data['m'][str(m)].append(timeit.default_timer()-start_time)
     else:
-        data['n'].update({str(n):[timeit.default_timer()-start_time]})
-    #f.write(str(timeit.default_timer()-start_time)+ "\n")    
-  #  print data
-    n = n + 10
+        data['m'].update({str(m):[timeit.default_timer()-start_time]})
+    m = m + 100
 #print data    
 f = open(filename, 'w+')
 f.write(json.dumps(data))
 f.close 
     
 #f.close()
+    
+    
+    
+    
+    
+    
