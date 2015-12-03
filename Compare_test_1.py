@@ -8,6 +8,8 @@ Created on Fri Nov 13 14:03:22 2015
 import numpy
 import time
 from rmse import rmse
+import cProfile
+import pstats, StringIO
 # creating R with zeroes and using the basic method and the zero_matrix method 
 # to see how long each takes with the same input for comparison
 
@@ -42,7 +44,8 @@ basic_u = U_matrix
 basic_v = V_matrix
 zero_u = U_matrix
 zero_v = V_matrix
-
+pr = cProfile.Profile()
+pr.enable()
 # BASIC MATRIX FACTORIZATION
 t0 = time.time()
 for i in range(iterations):
@@ -53,6 +56,13 @@ for i in range(iterations):
         basic_v[:, v] = numpy.dot(numpy.dot(R_matrix[:, v].T, basic_u.T), numpy.linalg.pinv(numpy.asmatrix(numpy.dot(basic_u, basic_u.T))))
 
     basic_R = numpy.dot(basic_u.T, basic_v)
+pr.disable()
+s = StringIO.StringIO()
+sortby = "cumulative"
+ps = pstats.Stats(pr, stream = s).sort_stats(sortby)
+ps.print_stats()
+ps.dump_stats("output_stats.txt")
+#print s.getvalue()
 t1 = time.time()
 basic_time = t1 - t0
 # ZERO MATRIX FACTORIZATION

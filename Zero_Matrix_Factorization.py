@@ -1,4 +1,5 @@
 import numpy
+import cProfile
 
 iterations = 5
 sigma_rat = 0
